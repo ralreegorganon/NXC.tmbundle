@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>saveActiveFile</string>
+	<key>command</key>
+	<string>#!/usr/bin/env bash
+
+# INITIALISATION ---------------------------------------------------------------------
+
+source "$TM_SUPPORT_PATH/lib/bash_init.sh"
+source "$TM_SUPPORT_PATH/lib/webpreview.sh"
+
+export TM_NBC=${TM_NBC:-nbc}
+
+OUTPUT_FILE=`echo $TM_FILEPATH | sed -e 's/nxc$/rxe/'`
+
+html_header "NXC" "Compilation"
+
+require_cmd "$TM_NBC" "If you have installed NXC, then you need to either &lt;a href=\"help:anchor='search_path'%20bookID='TextMate%20Help'\"&gt;update your &lt;tt&gt;PATH&lt;/tt&gt;&lt;/a&gt; or set the &lt;tt&gt;TM_NBC&lt;/tt&gt; shell variable (e.g. in Preferences / Advanced)"
+
+# COMPILATION ---------------------------------------------------------------------
+
+result=`CocoaDialog inputbox --title "Compile options" --no-newline --informative-text "Enter any command line options:" --text "-w+ -O="$OUTPUT_FILE --button1 "Ok" --button2 "Cancel"`
+
+set -- $result
+BUTTON=$1
+shift
+COMPILE_OPTIONS=$@
+
+if [ "$BUTTON" == "2" ]; then
+  echo "&lt;b&gt;Compilation canceled!&lt;/b&gt;"
+  html_footer
+  exit
+fi
+
+echo "Compile to "$OUTPUT_FILE" with options &lt;tt&gt;"$COMPILE_OPTIONS"&lt;/tt&gt; : &lt;br /&gt;"
+echo '&lt;div class="executor"&gt;&lt;pre&gt;'
+echo `$TM_NBC $COMPILE_OPTIONS $TM_FILEPATH`
+echo '&lt;/pre&gt;&lt;/div&gt;'
+echo "&lt;br&gt;&lt;b&gt;Compilation complete!&lt;/b&gt;"
+
+html_footer
+</string>
+	<key>input</key>
+	<string>document</string>
+	<key>keyEquivalent</key>
+	<string>@r</string>
+	<key>name</key>
+	<string>Compile</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>scope</key>
+	<string>source.nxc</string>
+	<key>uuid</key>
+	<string>DD321B64-0329-45E1-833B-7E404D2DAE7E</string>
+</dict>
+</plist>

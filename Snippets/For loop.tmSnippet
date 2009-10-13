@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>for(size_t ${2:i} = 0; $2 &lt; ${1:count}; ${3:++$2}) {
+	${0:/* code */}
+}</string>
+	<key>name</key>
+	<string>For loop</string>
+	<key>scope</key>
+	<string>source.nxc</string>
+	<key>tabTrigger</key>
+	<string>for</string>
+	<key>uuid</key>
+	<string>DEB7FE3E-B0AA-4A8F-850F-8F16EDF2E562</string>
+</dict>
+</plist>
